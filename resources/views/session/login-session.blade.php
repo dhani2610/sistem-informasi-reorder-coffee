@@ -1,67 +1,242 @@
-@extends('layouts.user_type.guest')
 
-@section('content')
 
-  <main class="main-content  mt-0">
-    <section>
-      <div class="page-header min-vh-75">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
-              <div class="card card-plain mt-8">
-                <div class="card-header pb-0 text-left bg-transparent">
-                  <h3 class="font-weight-bolder text-info text-gradient">Welcome back</h3>
-                  <p class="mb-0">Create a new acount<br></p>
-                  <p class="mb-0">OR Sign in with these credentials:</p>
-                  <p class="mb-0">Email <b>admin@softui.com</b></p>
-                  <p class="mb-0">Password <b>secret</b></p>
-                </div>
-                <div class="card-body">
-                  <form role="form" method="POST" action="/session">
-                    @csrf
-                    <label>Email</label>
-                    <div class="mb-3">
-                      <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="admin@softui.com" aria-label="Email" aria-describedby="email-addon">
-                      @error('email')
-                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                      @enderror
-                    </div>
-                    <label>Password</label>
-                    <div class="mb-3">
-                      <input type="password" class="form-control" name="password" id="password" placeholder="Password" value="secret" aria-label="Password" aria-describedby="password-addon">
-                      @error('password')
-                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                      @enderror
-                    </div>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
-                      <label class="form-check-label" for="rememberMe">Remember me</label>
-                    </div>
-                    <div class="text-center">
-                      <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
-                    </div>
-                  </form>
-                </div>
-                <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                <small class="text-muted">Forgot you password? Reset you password 
-                  <a href="/login/forgot-password" class="text-info text-gradient font-weight-bold">here</a>
-                </small>
-                  <p class="mb-4 text-sm mx-auto">
-                    Don't have an account?
-                    <a href="register" class="text-info text-gradient font-weight-bold">Sign up</a>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
-                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('../assets/img/curved-images/curved6.jpg')"></div>
-              </div>
-            </div>
-          </div>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@700&family=Figtree:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+      * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    /* background-color: #24242c; */
+    background-color: #24242c;
+}
+
+.container {
+    width: 50%;
+    height: 100%;
+    /* background-color: #24242c; */
+    background-color: #24242c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.pic {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    background-image: url("https://i0.wp.com/jayaagungmesin.com/wp-content/uploads/2023/07/coffee-maker.jpg?fit=700%2C548&ssl=1");
+    background-size: cover;
+    background-position: center;
+}
+
+/* .pic2 {
+    width: 100%;
+    height: 15px;
+    position: absolute;
+    display: none;
+    top: 0;
+    background-image: url("https://4kwallpapers.com/images/wallpapers/dark-blue-pink-2560x2560-12661.jpg");
+    background-size: cover;
+    background-position: center;
+} */
+
+.inp {
+    width: 350px;
+    height: 50px;
+    max-height: 50px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+label {
+    position: absolute;
+    left: 20px;
+    color: #777780;
+    height: 20px;
+    transform: translateY(2.5px);
+    padding-left: 5px;
+    cursor: text;
+    padding-right: 5px;
+    transition: .2s;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: 2px solid #494954;
+    border-radius: 10px;
+    outline: none;
+    transition: .4s;
+    color: #fff;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 15px;
+}
+
+input:focus {
+    border: 2px solid #1f1fff;
+    box-shadow: #6767ff 0px 1px 1px, #6767ff 0px 0px 0px 1px;
+}
+
+input:focus + label {
+    left: 20px;
+    transform: translateY(-22px);
+    font-size: 12px;
+    background-color: #24242c;
+}
+
+.up {
+    left: 20px;
+    transform: translateY(-22px);
+    font-size: 12px;
+    background-color: #24242c;
+}
+
+button {
+    width: 350px;
+    height: 50px;
+    min-height: 50px;
+    max-height: 50px;
+    background-color: #2020db;
+    border: 2px solid #1f1fff;
+    border-radius: 50px;
+    outline: none;
+    transition: .4s;
+    color: #fff;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: 'Figtree', sans-serif;
+}
+
+button:hover {
+    background-color: #1717c2;
+    border: 2px solid #1717c2;
+}
+
+h1 {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-family: 'Figtree', sans-serif;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+a {
+    color: #bbbbbb;
+    text-decoration: none;
+    font-size: 12px;
+    font-family: 'Figtree', sans-serif;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    width: 70px;
+    border-radius: 10px;
+    border: 1px solid #494954;
+}
+
+@media only screen and (max-width: 750px) {
+    .pic {
+      display: none;
+    }
+
+    /* .pic2 {
+        display: block;
+    } */
+
+    .container {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 450px) {
+    .pic {
+      display: none;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    body {
+        padding-bottom: 10px;
+        overflow: scroll;
+        height: 100%;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="pic2"></div>
+        <img src="{{asset('assets/img/logo-kopi.png')}}" alt="">
+        <h1>Log in To Continue</h1>
+        <form method="POST" action="/login-post">
+          @csrf
+        <div class="inp">
+            <input type="text" id="username" name="email">
+            <label onclick="focusinp('usr')" for="Username">Email</label>
         </div>
-      </div>
-    </section>
-  </main>
+        <br>
+        <div class="inp">
+            <input type="password" id="password" name="password">
+            <label onclick="focusinp('pass')" for="Password">Password</label>
+        </div>
+        <br>
+        {{-- <div style="display: flex;"><a href="">Forgot Password? - Support</a></div> --}}
+        <button type="submit">Login</button>
+        </form>
+        {{-- <a  onclick="myFunction()" href="#">Dont have a account? Sign up</a> --}}
+    </div>
+    <div class="pic">
+    </div>
 
-@endsection
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+  const inputs = document.querySelectorAll(".inp input");
+
+  inputs.forEach(input => {
+    input.addEventListener("input", function() {
+      const label = this.nextElementSibling;
+      label.classList.toggle("up", this.value.trim() !== "");
+    });
+  });
+});
+
+function focusinp(inp) {
+  if (inp == 'usr') {
+    document.getElementById("username").focus();
+  } else if (inp == 'pass') {
+    document.getElementById("password").focus();
+  } else {
+    document.getElementById("username").focus();
+  }
+}
+    </script>
+</body>
+</html>

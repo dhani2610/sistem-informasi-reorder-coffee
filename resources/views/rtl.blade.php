@@ -716,7 +716,7 @@
               tension: 0.4,
               borderWidth: 0,
               pointRadius: 0,
-              borderColor: "#cb0c9f",
+              borderColor: "#17ad37",
               borderWidth: 3,
               backgroundColor: gradientStroke1,
               fill: true,
